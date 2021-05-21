@@ -1,5 +1,5 @@
 const fs = require('fs');
-var log = require('C:/Users/blake/Documents/GitHub/Chegg-Bot-Request/utils/logger.js')
+var log = require(__dirname+'/utils/logger.js')
 
 
 
