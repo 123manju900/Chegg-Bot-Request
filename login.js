@@ -46,8 +46,7 @@ async function login(){
 });
 
 
-
-  await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
+  await page.goto('https://www.chegg.com/writing/login/', {waitUntil: 'load', timeout: 0});
   await page.waitForTimeout(1000)
   await page.type('#emailForSignIn', '', {delay: 100}); // Types slower, like a user enter username here
   await page.type('#passwordForSignIn', '', {delay: 100}); // Types slower, like a user enter pass here
@@ -57,7 +56,7 @@ async function login(){
   await page.waitForSelector('#citation-widget', {visible: true})
   log('Login Good','ok')
 
-  await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
+  await page.goto('https://www.chegg.com/writing/login/', {waitUntil: 'load', timeout: 0});
 
 
   
