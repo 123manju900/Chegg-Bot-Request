@@ -60,7 +60,7 @@ client.on('message', message => {
                         'sec-fetch-user': '?1',
                         'sec-fetch-dest': 'document',
                         'accept-language': 'en-US,en;q=0.9',
-                        'Cookie': 'id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NmExZGI5ZS0xNGRkLTQ3YmQtYTI0Zi04NDkzMjQxMTU0ZDUiLCJhdWQiOiJDVyIsImlzcyI6Imh1Yi5jaGVnZy5jb20iLCJleHAiOjE2MzczNDIyNzUsImlhdCI6MTYyMTU3MjI3NSwiZW1haWwiOiJibGFrZWJlaW5AZ21haWwuY29tIn0.QKeJYsBYg0JdWxuYK_wPAY1loWZEMspQ8E2_iMVPaR1L8k66sEMXYSrxksvFuHlUeN1JscDHt8DloiGDlmR2M202dDOitvxuToYQ3KR8MJ8mhepp7mNaKq2CSdn69ntLaotibVTgtdsHoavE4DntTyXh-KCclG1Y9eusi6rJvxRksv8ZvFu61EomobpiFtwAdd6gDTMc3oPys88tRpcPyohivmXGx62VHz0j7kwFu0CkEq5PF_kYbrgVR0o-80OgpmkX3tPoSAEJfpzIl3h4LDSYlcKIKL7_w1b1PD9mLf3wbW1Dx78klwqHx2X14YPNAor8X3ljuNMcC5PujM5_-g'
+                        'Cookie': ''// enter token here after running login.js from cookies.json
                     }
                 })    .then(res => res.text())
                 .then(body => {
