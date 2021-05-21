@@ -57,17 +57,32 @@ async function login(){
   await page.waitForSelector('#citation-widget', {visible: true})
   log('Login Good','ok')
 
+  await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
 
 
-  const cookies = await page.cookies();
-  console.log(cookies.length)
   await fs.writeFileSync('./cookies.json', '', function(){console.log('Cookies Cleared')})
 
   //console.log(cookies)
-  await fs.writeFileSync('./cookies.json', JSON.stringify(cookies, null, 2))
-  //await fs.writeFileSync('./cookies.json', cookies, function(){console.log('Cookies Cleared')})
-  log('Cookies Saved')
+    //await fs.writeFileSync('./cookies.json', cookies, function(){console.log('Cookies Cleared')})
 
+
+
+
+
+
+  await page.waitForTimeout(5000)
+  const cookies = await page.cookies();
+  console.log(cookies.length)
+  log('Cookies Saved')
+  let allCookies = [];
+  for(let i=0; cookies.length > i; i++) {
+    if(cookies[i].name==='id_token'){
+      allCookies.push(`${cookies[i].name}=${cookies[i].value}`);
+    }
+  
+  };
+  let cookie = allCookies.join('; ');
+  await fs.writeFileSync('./cookies.json', cookie)
 
 
   await browser.close()

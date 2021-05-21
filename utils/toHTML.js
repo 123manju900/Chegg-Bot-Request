@@ -8,7 +8,7 @@ let toHTML = function(file, data){
         if (err){
             log(err,'err')
         }
-        log('Wrote '+file,'ok')
+        //log('Wrote '+file,'ok')
       })
 }
 
