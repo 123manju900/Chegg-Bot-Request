@@ -142,4 +142,4 @@ async function whoRequest(info){
 
 
 
-client.login('ODQ1MDc4NTA0NTkyNTA2OTQw.YKbusA.BZVyKPLoQZoYpr2etHQSkH9YDrU');
+client.login('');

@@ -49,8 +49,8 @@ async function login(){
 
   await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
   await page.waitForTimeout(1000)
-  await page.type('#emailForSignIn', 'blakebein@gmail.com', {delay: 100}); // Types slower, like a user enter username here
-  await page.type('#passwordForSignIn', '!4Craftmine()', {delay: 100}); // Types slower, like a user enter pass here
+  await page.type('#emailForSignIn', '', {delay: 100}); // Types slower, like a user enter username here
+  await page.type('#passwordForSignIn', '', {delay: 100}); // Types slower, like a user enter pass here
   await page.click('#eggshell-2 > form > div > div > div > footer > button'); // Types slower, like a user
 
 
