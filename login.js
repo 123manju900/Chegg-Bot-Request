@@ -50,7 +50,7 @@ async function login(){
   await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
   await page.waitForTimeout(1000)
   await page.type('#emailForSignIn', 'blakebein@gmail.com', {delay: 100}); // Types slower, like a user enter username here
-  await page.type('#passwordForSignIn', '4Craftmine()', {delay: 100}); // Types slower, like a user enter pass here
+  await page.type('#passwordForSignIn', '!4Craftmine()', {delay: 100}); // Types slower, like a user enter pass here
   await page.click('#eggshell-2 > form > div > div > div > footer > button'); // Types slower, like a user
 
 
@@ -60,8 +60,12 @@ async function login(){
   await page.goto("https://www.chegg.com/writing/login/", {waitUntil: 'networkidle2'});
 
 
-  await fs.writeFileSync('./cookies.json', '', function(){console.log('Cookies Cleared')})
-
+  
+  const cookiess = await page.cookies();
+  await fs.writeFileSync('./allCookies.json', '', function(){console.log('Cookies Cleared')})
+    
+  //console.log(cookies)
+  await fs.writeFileSync('./allCookies.json', JSON.stringify(cookiess, null, 2))
   //console.log(cookies)
     //await fs.writeFileSync('./cookies.json', cookies, function(){console.log('Cookies Cleared')})
 
@@ -69,7 +73,7 @@ async function login(){
 
 
 
-
+  await fs.writeFileSync('./cookies.json', '', function(){console.log('Cookies Cleared')})
   await page.waitForTimeout(5000)
   const cookies = await page.cookies();
   console.log(cookies.length)

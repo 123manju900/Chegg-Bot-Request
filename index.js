@@ -13,9 +13,6 @@ var log = require(__dirname+'/utils/logger.js')
 
 
 
-
-
-
 client.on('ready', () => {
     log(`Logged in to Discord as ${client.user.tag}`, 'init')
 });
@@ -32,6 +29,11 @@ client.on('message', message => {
             if(message.content.startsWith(`!chegg`)) {
                 var s = message.content.replace('!chegg', '')
                 var noq = s.split("?")[0]; //removes track id 
+
+                // URLS FOR LATER PDF GENERATION FOR CH
+                fs.appendFileSync(__dirname+'/PDFS/pdfsURL.txt',noq+'\n')
+
+
     
                 let server = message.guild.name
                 let serverid = message.guild.id
@@ -58,7 +60,7 @@ client.on('message', message => {
                         'sec-fetch-user': '?1',
                         'sec-fetch-dest': 'document',
                         'accept-language': 'en-US,en;q=0.9',
-                        'Cookie': 'id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NmExZGI5ZS0xNGRkLTQ3YmQtYTI0Zi04NDkzMjQxMTU0ZDUiLCJhdWQiOiJDVyIsImlzcyI6Imh1Yi5jaGVnZy5jb20iLCJleHAiOjE2MzczMzAzNzEsImlhdCI6MTYyMTU2MDM3MSwiZW1haWwiOiJibGFrZWJlaW5AZ21haWwuY29tIn0.DO-imFt5KZk01UO6Dc13qtVsUqUNxL2D20LLRfp6DarUcfTi4dQXrE8XnFFKuQuYOAOAuPBm8V71665LjXHlEi8wEGn2GGzeMBBh_AL8mHqIrMFOwHLgtLSDnAPihn8u5bLxFNF2iXrASdJVbSRQ1We2bXVIivzRbMjQzP_-AYdAAnCaBvyqVtAy7VmoQ-nF531Y698_Wi9Y_gJTgpv5MrppkCoAhlxgZ3lvCHwn2XXALw_rgJCM8Ks2YGftW1yna95ShwF6STKYS9FzKHOfBgCg38E6SxtApQEbWBLndmq9eqvmTWmjaCXTQG9wRPmARN1o3gc0S8pmJuNFJOCE1w'
+                        'Cookie': 'id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NmExZGI5ZS0xNGRkLTQ3YmQtYTI0Zi04NDkzMjQxMTU0ZDUiLCJhdWQiOiJDVyIsImlzcyI6Imh1Yi5jaGVnZy5jb20iLCJleHAiOjE2MzczNDIyNzUsImlhdCI6MTYyMTU3MjI3NSwiZW1haWwiOiJibGFrZWJlaW5AZ21haWwuY29tIn0.QKeJYsBYg0JdWxuYK_wPAY1loWZEMspQ8E2_iMVPaR1L8k66sEMXYSrxksvFuHlUeN1JscDHt8DloiGDlmR2M202dDOitvxuToYQ3KR8MJ8mhepp7mNaKq2CSdn69ntLaotibVTgtdsHoavE4DntTyXh-KCclG1Y9eusi6rJvxRksv8ZvFu61EomobpiFtwAdd6gDTMc3oPys88tRpcPyohivmXGx62VHz0j7kwFu0CkEq5PF_kYbrgVR0o-80OgpmkX3tPoSAEJfpzIl3h4LDSYlcKIKL7_w1b1PD9mLf3wbW1Dx78klwqHx2X14YPNAor8X3ljuNMcC5PujM5_-g'
                     }
                 })    .then(res => res.text())
                 .then(body => {
@@ -66,10 +68,26 @@ client.on('message', message => {
                     const $ = cheerio.load(body)
                 
                     let question = $("body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.question.txt-small > div.txt-body.question-body.mod-parent-container > div.ugc-base.question-body-text").text()
-                    let answer = $('body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.answers-wrap > ul > li > div.answer.txt-small.mod-parent-container > div.txt-body.answer-body > div.answer-given-body.ugc-base').html();
-                    //console.log(question)
+
+                    try {
+                        let answer = $('body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.answers-wrap > ul > li > div.answer.txt-small.mod-parent-container > div.txt-body.answer-body > div.answer-given-body.ugc-base').html();
+                        toHTML('answer.html',answer)
+                        //fs.appendFileSync('./answer.html', question)
+                        message.channel.send(message.author.username, {files: ['./answer.html']});
+                    } catch (error) {
+                        log('Error on Answer Method 1')
+                        message.channel.send('Sorry, '+ message.author.username +' that question type is not currently supported. Contact blake#4692 if you think this is a bug...');
+                    }
+
+                    // try {
+                    //     let answer = $('#solution-player-sdk').text();
+                    //     toHTML('answer.html',answer)
+                    // } catch (error) {
+                    //     log('Error on Answer Method 2')
+                    // }
                     //console.log(answer)
-                    toHTML('answer.html',answer)
+                    //toHTML('answer.html',answer)
+
                 
                 
                 
@@ -77,7 +95,7 @@ client.on('message', message => {
                 
                     let time = new Date().getTime() - start_time
                 
-                    message.channel.send(message.author.username, {files: ['./answer.html']});
+                    
                     log('Response Time: ' + time+' MS','info')
 
 
