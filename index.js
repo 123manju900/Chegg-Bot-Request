@@ -26,9 +26,9 @@ client.on('message', message => {
     
     try {
         if(message.member.hasPermission(['SEND_MESSAGES'])) {
-            if(message.content.startsWith(`!chegg`)) {
-                var s = message.content.replace('!chegg', '')
-                var noq = s.split("?")[0]; //removes track id 
+            if(message.content.startsWith(`https://www.chegg.com/`)) {
+                //var s = message.content.replace('!chegg', '')
+                var noq = message.content.split("?")[0]; //removes track id 
 
                 // URLS FOR LATER PDF GENERATION FOR CH
                 fs.appendFileSync(__dirname+'/PDFS/pdfsURL.txt',noq+'\n')
@@ -60,23 +60,36 @@ client.on('message', message => {
                         'sec-fetch-user': '?1',
                         'sec-fetch-dest': 'document',
                         'accept-language': 'en-US,en;q=0.9',
-                        'Cookie': ''// enter token here after running login.js from cookies.json
+                        'Cookie': ''
                     }
                 })    .then(res => res.text())
                 .then(body => {
                     //toHTML('webiste.html',body)
-                    const $ = cheerio.load(body)
+                    let $ = cheerio.load(body)
                 
                     let question = $("body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.question.txt-small > div.txt-body.question-body.mod-parent-container > div.ugc-base.question-body-text").text()
 
                     try {
                         let answer = $('body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.answers-wrap > ul > li > div.answer.txt-small.mod-parent-container > div.txt-body.answer-body > div.answer-given-body.ugc-base').html();
-                        toHTML('answer.html',answer)
+                        $ = cheerio.load(answer);
+                        $("img").each(function() {
+
+                            var old_src=$(this).attr("src");
+                            if(old_src.includes('https:') === false){
+                                var new_src = "https:" + old_src;
+                                log('Fixing Broken URL : ' + new_src,'ok')
+                                $(this).attr("src", new_src); 
+                            } 
+           
+                    });
+                    
+;
+                        toHTML('answer.html',$.html())
                         //fs.appendFileSync('./answer.html', question)
-                        message.channel.send(message.author.username, {files: ['./answer.html']});
+                        message.channel.send('<@'+message.author.id+'>', {files: ['./answer.html']});
                     } catch (error) {
                         log('Error on Answer Method 1')
-                        message.channel.send('Sorry, '+ message.author.username +' that question type is not currently supported. Contact blake#4692 if you think this is a bug...');
+                        message.channel.send('Sorry, '+ '<@'+message.author.id+'>' +' that question type is not currently supported. Contact blake#4692 if you think this is a bug...');
                     }
 
                     // try {
