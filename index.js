@@ -6,7 +6,9 @@ var moment = require('moment'); // require
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var log = require(__dirname+'/utils/logger.js')
-
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 
 
 
@@ -66,10 +68,13 @@ client.on('message', message => {
                 .then(body => {
                     //toHTML('webiste.html',body)
                     let $ = cheerio.load(body)
+                    toHTML('body.html',body)
+                    
                 
                     let question = $("body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.question.txt-small > div.txt-body.question-body.mod-parent-container > div.ugc-base.question-body-text").text()
 
                     try {
+
                         let answer = $('body > div.chg-body.no-nav.no-subnav.header-nav > div.chg-container.center-content > div.chg-container-content > div.chg-global-content > div > div.parent-container.question-headline > div.main-content.question-page > div.dialog-question > div.answers-wrap > ul > li > div.answer.txt-small.mod-parent-container > div.txt-body.answer-body > div.answer-given-body.ugc-base').html();
                         $ = cheerio.load(answer);
                         $("img").each(function() {
@@ -83,13 +88,15 @@ client.on('message', message => {
            
                     });
                     
-;
+
                         toHTML('answer.html',$.html())
                         //fs.appendFileSync('./answer.html', question)
                         message.channel.send('<@'+message.author.id+'>', {files: ['./answer.html']});
                     } catch (error) {
                         log('Error on Answer Method 1')
-                        message.channel.send('Sorry, '+ '<@'+message.author.id+'>' +' that question type is not currently supported. Contact blake#4692 if you think this is a bug...');
+                        toBrowser(noq)
+
+                        //message.channel.send('Sorry, '+ '<@'+message.author.id+'>' +' that question type not supported in this bot use '+'<#'+'835956966308315197'+'>'+ ' bot or see '+'<#'+'846159167584600065'+'>');
                     }
 
                     // try {
@@ -140,6 +147,34 @@ client.on('message', message => {
     } catch (error) {
         log('User does not have permission to speak','info')
     }
+
+
+
+
+
+    async function toBrowser(noq){
+        global.browser = await puppeteer.launch({headless: false,args: ['--no-sandbox']});
+        global.page = await browser.newPage();
+    
+    
+        await page.setRequestInterception(true);
+        page.on('request', request => {
+        if (request.url().endsWith('.file'))
+            request.abort();
+        else
+          request.continue();
+        });
+    
+        const cookiesString = await fs.readFileSync('./allCookies.json');
+        const cookies = JSON.parse(cookiesString);
+        await page.setCookie(...cookies);
+    
+    
+        await page.goto(noq, {waitUntil: 'networkidle2', timeout: 0});
+        global.screenshot = await page.screenshot({path: 'test.png', fullPage: true});
+        message.channel.send('<@'+message.author.id+'>', {files: [screenshot]});
+        await browser.close()
+    }
 })
 
 
@@ -152,6 +187,10 @@ async function whoRequest(info){
     log('Wrote Info to /Logs.txt', 'info')
     
 }
+
+
+
+
 
 
 
