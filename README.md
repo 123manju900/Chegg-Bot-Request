@@ -3,6 +3,7 @@
  - Requests
  - Less than 2000 MS response time
  - Login in puppeeter for ease
+ - Solves Multi-Steps
  - pdf.js for generating answers to upload to coursehero
 
 
