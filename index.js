@@ -153,7 +153,7 @@ client.on('message', message => {
 
 
     async function toBrowser(noq){
-        global.browser = await puppeteer.launch({headless: false,args: ['--no-sandbox']});
+        global.browser = await puppeteer.launch({headless: true,args: ['--no-sandbox']});
         global.page = await browser.newPage();
     
     
