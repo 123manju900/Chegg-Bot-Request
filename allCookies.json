@@ -1,0 +1,16 @@
+[
+  {
+    "name": "id_token",
+    "value": "",
+    "domain": ".chegg.com",
+    "path": "/",
+    "expires": 1638469200.01446,
+    "size": 579,
+    "httpOnly": false,
+    "secure": false,
+    "session": false,
+    "sameParty": false,
+    "sourceScheme": "Secure",
+    "sourcePort": 443
+  }
+]
