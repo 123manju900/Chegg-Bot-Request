@@ -14,5 +14,8 @@
 
 
 
- if you have any questions feel free to add me on discord
- blake#4692
+DO NOT CONTACT ME FOR THIS SCRIPT I WILL NOT RESPOND
+THIS SCRIPT(S) ARE FOR EDUCATIONAL PURPOSES
+i am not responsible for your usage
+
+
