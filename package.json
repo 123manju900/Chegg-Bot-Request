@@ -24,7 +24,16 @@
     "puppeteer-extra": "^3.1.18",
     "puppeteer-extra-plugin-stealth": "^2.7.8",
     "request": "^2.88.2",
+    "ssh2": "^1.1.0",
     "tough-cookie": "^4.0.0",
     "util": "^0.12.3"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "views/**/*",
+    "targets": [
+      "node14-linux-arm64"
+    ],
+    "outputPath": "dist"
   }
 }
