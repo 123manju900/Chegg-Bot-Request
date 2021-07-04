@@ -430,9 +430,9 @@ try {
               method: 'POST',
               headers: {
                   'Host': 'proxy.chegg.com',
-                  'X-CHEGG-DFID': 'mobile|E723BCA1-67AB-4635-B9A9-3FBA34073B38',
+                  'X-CHEGG-DFID': '   ',
                   'Accept': 'application/json',
-                  'Authorization': 'Basic MFQxOE5HYmFsUURGYzBnWkh6b3ZwZVJkN0E1Y3BMQ3g6dnRnamFZa3Ric2p4OUFPUg==',
+                  'Authorization': '    ',
                   'Accept-Language': 'en-US;q=1.0',
                   'Content-Type': 'application/json',
                   'User-Agent': 'CheggApp/3.40.0 (com.chegg.mobile.consumer; build:3.40.0.0; iOS 14.6.0) Alamofire/5.2.2',
